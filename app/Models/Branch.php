@@ -12,4 +12,9 @@ class Branch extends Model
     protected $fillable = [
         'branch_name',
     ];
+
+
+    public function organization(){
+        return $this->hasMany(Organization::class, 'branch_id' );
+    }
 }

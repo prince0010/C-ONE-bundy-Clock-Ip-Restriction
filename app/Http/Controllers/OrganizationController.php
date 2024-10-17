@@ -2,17 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\BranchService;
-use App\Models\Branch;
+use App\Models\Organization;
 use Illuminate\Http\Request;
 
-class BranchController extends Controller
+class OrganizationController extends Controller
 {
-    protected $branchService;
-
-    public function __construct(BranchService $branchService){
-        $this->branchService = $branchService;
-    }
     /**
      * Display a listing of the resource.
      */
@@ -26,22 +20,22 @@ class BranchController extends Controller
      */
     public function create(Request $request)
     {
-        try{
-             $validatedData = $request->validate([
-            'branch_name' => 'required|string|max:50',
+        
+        $validatedData = $request->validate([
+            'organization_name' => 'required|unique:organizations',
+            'branch_id' => 'required',
         ]);
 
-        $branchData = $this->branchService->createBranch($validatedData);
+        Organization::create([
+            'organization_name' => $validatedData['organization_name'],
+            'branch_id'         => $validatedData['branch_id']
+        ]);
 
         return response()->json([
-            'messsage' => 'Branch Added',
-            'branch' => $branchData
-        ], 201);
+           'message' => 'Organization created successfully!
+            (Na record na ang organization salamat)'
+        ], 200);
 
-        }
-        catch(\Exception $e){
-
-        }
     }
 
     /**
@@ -55,7 +49,7 @@ class BranchController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Branch $branch)
+    public function show(Organization $organization)
     {
         //
     }
@@ -63,7 +57,7 @@ class BranchController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Branch $branch)
+    public function edit(Organization $organization)
     {
         //
     }
@@ -71,7 +65,7 @@ class BranchController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Branch $branch)
+    public function update(Request $request, Organization $organization)
     {
         //
     }
@@ -79,7 +73,7 @@ class BranchController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Branch $branch)
+    public function destroy(Organization $organization)
     {
         //
     }

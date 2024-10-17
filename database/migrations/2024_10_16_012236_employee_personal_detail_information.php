@@ -11,23 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employee_person_id_details', function (Blueprint $table){
+        Schema::create('employee_details', function (Blueprint $table){
             $table->id();
-            $table->integer('employee_id')->unique()->nullable();
             $table->string('first_name', 50);
             $table->string('middle_name', 50);
             $table->string('last_name', 50);
             $table->string('nickname', 50);
-            $table->string('marital_status', 50);
-            $table->date('brithday');
-            $table->string('birthplace', 255);
-            $table->string('home_address', 255);
-            $table->string('present_address', 255);
-            $table->string('ext', 10)->nullable();
-            $table->string('picture');
-            $table->foreignId('branch_id')->constrained('branches');
-            // $table->foreignId('')
+            $table->string('gender');
+            $table->string('marital_status');
+            $table->date('birthday');
+            $table->string('birthplace');
+            $table->string('home_address');
+            $table->string('ext');
+            $table->string('present_address');
+            $table->foreignId('branch_id')->constrained('branch');
             $table->timestamps();
+
         });
     }
 
@@ -36,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('employee_details');
     }
 };

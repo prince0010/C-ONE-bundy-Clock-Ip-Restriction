@@ -5,19 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class IpSuffix extends Model
+class EmployeeExemption extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'ip_suffix',
+        'emp_ip',
     ];
-
-    
-
 }
-
-$ip = $request->ip();
-// $message = $this->birthdayCheck($request);
-
-

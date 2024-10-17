@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\IpSuffixService;
-use App\Models\IpSuffix;
+use App\Http\Resources\DeptExemptService;
+use App\Models\DepartmentExemption;
 use Illuminate\Http\Request;
 
-class IpSuffixController extends Controller
+class DepartmentExemptionController extends Controller
 {
-    protected $ipSuffixService;
+    protected $deptExemService;
 
-    public function __construct(IpSuffixService $ipSuffixService){
-        $this->$ipSuffixService = $ipSuffixService;
+    public function __construct(DeptExemptService $deptExemService){
+        $this->deptExemService = $deptExemService;
     }
-
-  
     public function index()
     {
         //
@@ -25,17 +23,17 @@ class IpSuffixController extends Controller
      */
     public function create(Request $request)
     {
+        
         $validatedData = $request->validate([
-            'ip_suffix' => 'required|string'
+            'dep_ip' => 'required|string',
         ]);
-
-        $ipsuffixdata = $this->ipSuffixService->createIpSuffix($validatedData);
-
+        
+        $dataDept = $this->deptExemService->createDeptEx($validatedData);
+        
         return response()->json([
-            'data' => $ipsuffixdata,
-            'message' => 'Added Ip Suffix'
+            'messsage' => 'Department Ip Exemption Added',
+            'dataDept' => $dataDept
         ], 201);
-
     }
 
     /**
@@ -49,7 +47,7 @@ class IpSuffixController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(IpSuffix $ipSuffix)
+    public function show(DepartmentExemption $departmentExemption)
     {
         //
     }
@@ -57,7 +55,7 @@ class IpSuffixController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(IpSuffix $ipSuffix)
+    public function edit(DepartmentExemption $departmentExemption)
     {
         //
     }
@@ -65,7 +63,7 @@ class IpSuffixController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, IpSuffix $ipSuffix)
+    public function update(Request $request, DepartmentExemption $departmentExemption)
     {
         //
     }
@@ -73,7 +71,7 @@ class IpSuffixController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(IpSuffix $ipSuffix)
+    public function destroy(DepartmentExemption $departmentExemption)
     {
         //
     }

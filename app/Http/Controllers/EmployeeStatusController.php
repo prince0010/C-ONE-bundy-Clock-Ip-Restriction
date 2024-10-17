@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\BranchService;
-use App\Models\Branch;
+use App\Http\Resources\EmpStatusService;
+use App\Models\EmployeeStatus;
 use Illuminate\Http\Request;
 
-class BranchController extends Controller
+class EmployeeStatusController extends Controller
 {
-    protected $branchService;
+    protected $employeeStatusService;
 
-    public function __construct(BranchService $branchService){
-        $this->branchService = $branchService;
+    public function __construct(EmpStatusService $employeeStatusService){
+        $this->employeeStatusService = $employeeStatusService;
     }
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         //
@@ -26,22 +24,15 @@ class BranchController extends Controller
      */
     public function create(Request $request)
     {
-        try{
-             $validatedData = $request->validate([
-            'branch_name' => 'required|string|max:50',
+        $validatedData = $request->validate([
+            "emp_status_name" => "string|nullable",
         ]);
 
-        $branchData = $this->branchService->createBranch($validatedData);
+        $this->employeeStatusService->createEmpStatus($validatedData);
 
         return response()->json([
-            'messsage' => 'Branch Added',
-            'branch' => $branchData
+            "message" => 'Created Employee Status'
         ], 201);
-
-        }
-        catch(\Exception $e){
-
-        }
     }
 
     /**
@@ -55,7 +46,7 @@ class BranchController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Branch $branch)
+    public function show(EmployeeStatus $employeeStatus)
     {
         //
     }
@@ -63,7 +54,7 @@ class BranchController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Branch $branch)
+    public function edit(EmployeeStatus $employeeStatus)
     {
         //
     }
@@ -71,7 +62,7 @@ class BranchController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Branch $branch)
+    public function update(Request $request, EmployeeStatus $employeeStatus)
     {
         //
     }
@@ -79,7 +70,7 @@ class BranchController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Branch $branch)
+    public function destroy(EmployeeStatus $employeeStatus)
     {
         //
     }

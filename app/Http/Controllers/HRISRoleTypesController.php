@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\BranchService;
-use App\Models\Branch;
+use App\Http\Resources\HRISTypeSerivce;
+use App\Models\HRISRoleTypes;
 use Illuminate\Http\Request;
 
-class BranchController extends Controller
+class HRISRoleTypesController extends Controller
 {
-    protected $branchService;
 
-    public function __construct(BranchService $branchService){
-        $this->branchService = $branchService;
+    protected $hRISTypeSerivce;
+
+    public function __construct(HRISTypeSerivce $hRISTypeSerivce){
+        $this->hRISTypeSerivce = $hRISTypeSerivce;
     }
     /**
      * Display a listing of the resource.
@@ -26,22 +27,15 @@ class BranchController extends Controller
      */
     public function create(Request $request)
     {
-        try{
-             $validatedData = $request->validate([
-            'branch_name' => 'required|string|max:50',
+        $validatedData = $request->validate([
+            'role_type_name' => "string|nullable",
         ]);
 
-        $branchData = $this->branchService->createBranch($validatedData);
+        $this->hRISTypeSerivce->createHrisRole($validatedData);
 
         return response()->json([
-            'messsage' => 'Branch Added',
-            'branch' => $branchData
+            "message"=> "Created HRIS ROLE TYPE",
         ], 201);
-
-        }
-        catch(\Exception $e){
-
-        }
     }
 
     /**
@@ -55,7 +49,7 @@ class BranchController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Branch $branch)
+    public function show(HRISRoleTypes $hRISRoleTypes)
     {
         //
     }
@@ -63,7 +57,7 @@ class BranchController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Branch $branch)
+    public function edit(HRISRoleTypes $hRISRoleTypes)
     {
         //
     }
@@ -71,7 +65,7 @@ class BranchController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Branch $branch)
+    public function update(Request $request, HRISRoleTypes $hRISRoleTypes)
     {
         //
     }
@@ -79,7 +73,7 @@ class BranchController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Branch $branch)
+    public function destroy(HRISRoleTypes $hRISRoleTypes)
     {
         //
     }
