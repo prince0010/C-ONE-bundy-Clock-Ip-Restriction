@@ -58,7 +58,7 @@ class EmployeeDetailsController extends Controller
     ); 
     
     // Set Probitionary Date if the employment status is == 1(On Probation)
-    if($request->employee_status() === 1){
+    if($request->employee_status() === 1){ // 1 is on_probation employee_status
       $this->validate($request, [
         'probitionary_date' => 'required|date|date_format:Y-m-d',
       ]);

@@ -4,15 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\BranchService;
 use App\Models\Branch;
+use App\Models\Organization;
 use Illuminate\Http\Request;
 
 class BranchController extends Controller
 {
-    protected $branchService;
 
-    public function __construct(BranchService $branchService){
-        $this->branchService = $branchService;
-    }
     /**
      * Display a listing of the resource.
      */
@@ -21,27 +18,29 @@ class BranchController extends Controller
         //
     }
 
+    public function Employeesbranch(Request $request){
+        
+        $branch = $request->id;
+        
+    }
     /**
      * Show the form for creating a new resource.
      */
     public function create(Request $request)
     {
-        try{
              $validatedData = $request->validate([
-            'branch_name' => 'required|string|max:50',
-        ]);
+            'branch_name' => 'required|unique:branches',
+             ]);
 
-        $branchData = $this->branchService->createBranch($validatedData);
+            Branch::create([
+                'branch_name' => $validatedData['branch_name'],
+            ]);
 
-        return response()->json([
-            'messsage' => 'Branch Added',
-            'branch' => $branchData
-        ], 201);
+            return response()->json([
+                'message' => 'Branch Successfully Created
+                                (Nahimo na ang branch Salamat)',
+            ], 200);
 
-        }
-        catch(\Exception $e){
-
-        }
     }
 
     /**
@@ -79,8 +78,30 @@ class BranchController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Branch $branch)
+    public function destroy(Request $request, $id)
     {
-        //
+
+        $organization = Organization::where('branch_id', $request->id)->get();
+        foreach ($organization as $org){
+            // if($request->branch_id != null){
+            //     $org->branch_id = $request->branch_id;
+            // }else{
+            //     $org->branch_id = null;
+            // }
+            $org->branch_id = ($request->branch_id != null) ? $request->branch_id : null;
+            $org->save();
+        }
+        // Looking at the Id of the User that is doing the delete
+        $branch = Branch::find($request->id);
+        $branch->delete();
+
+        return response()->json([
+            'message' => 'Branch successfully deleted!
+            (Na delete na ang branch salamat)'
+        ], 200);
+
     }
+
+
+
 }

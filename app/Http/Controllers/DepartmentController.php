@@ -42,8 +42,8 @@ class DepartmentController extends Controller
         }
 
         // $this->departmentService->createDepartment(
-        //     $validateData,
-        // );
+        //     $validateData, 
+        // ); 
 
         Department::create([
             'dept_name' => $validateData['dept_name'],
