@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\BranchService;
 use App\Models\Branch;
 use App\Models\Organization;
+use DB;
 use Illuminate\Http\Request;
 
 class BranchController extends Controller
@@ -18,7 +19,7 @@ class BranchController extends Controller
         //
     }
 
-    public function Employeesbranch(Request $request){
+    public function BranchEmployees(Request $request){
         
         $branch = $request->id;
         
@@ -102,6 +103,18 @@ class BranchController extends Controller
 
     }
 
+    public function deleteWarning($id){
+
+        $branch = DB::table('branches')->whereNot('id', $id)->get();
+
+        return response()->json([
+            'branches' => $branch,
+        ], 200);
+    }
+
+    // public function getBranchEmployees(){
+
+    // }
 
 
 }

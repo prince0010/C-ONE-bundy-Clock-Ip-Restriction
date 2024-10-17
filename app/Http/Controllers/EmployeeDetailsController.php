@@ -38,22 +38,37 @@ class EmployeeDetailsController extends Controller
             'home_address' => 'required|max:255',
             'present_address' => 'required|max:255',
 
-
-            // Employee Employment Details ?
+            // Employee Employment Details * Do this
+            // 'years_of_experience',
+            'source' => 'nullable|min:2|max:25',
+            'date_hired' => 'required|date|date_format:Y-m-d',
+            'contract_end_date' => 'nullable|date|date_format:Y-m-d', 
+            'regularization_date' => 'nullable|date|date_format:Y-m-d',
+            'employee_status_id' => 'required|min:1|max:10', 
+            'exempted_from_attendance' => 'nullable|max:1', // ???
+            'position_type_id' => 'required|numeric|gt:0', 
+            'organization_id' => 'required|numeric|gt:0', 
+            'hris_role_type_id' => 'required|numeric|gt:0',
+            'department_id' => 'required|numeric|gt:0', 
+            'branch_id' => 'required|numeric|gt:0', 
+            // 'department_head' =>, 
+            // 'probation_date',
 
             
             // Employee Salaray Details?
-
 
             // Employee Contact Details
             'fullname'=> 'required|max:50',
             'contact_number' => 'required|max:20',
             'address' => 'required|max:250',
             'relationship' => 'required|max:20',
-            
         ],
         [
-
+            'position_type_id.gt'   => 'Please Select Position Type',
+            'organization_id.gt'    => 'Please Select Organization',
+            'hris_role_type_id.gt'  => 'Please Select Role',
+            'department_id.gt'      => 'Please Select Department',
+            'branch_id.gt'          => 'Please Select Branch',
         ]
     ); 
     
@@ -64,6 +79,26 @@ class EmployeeDetailsController extends Controller
       ]);
     }
 
+    // substr gina extract niya ang portion sa string based sa specific parameters, and kani na case is ang -2 which is kwaon niya ang last 2 digit sa year or ang specified na naas sulod sa substr.
+    $password = date("m", strtotime($request->birthday)) . substr(date("y", strtotime($request->birthday)), -2) . substr($request->employee_number, -2);
+
+    $employee = EmployeeDetails::create([
+        'employee_number' => $request->employee_number,
+        'first_name' => $request->first_name,
+        'middle_name' => $request->middle_name,
+        'last_name' => $request->last_name,
+        'nickname' => $request->nickname,
+        'gender' => $request->gender,
+        'marital_status' => $request->marital_status,
+        'birthday' => $request->birthday,
+        'birthplace' => $request->birthplace,
+        'home_address' => $request->home_address,
+        'present_address' => $request->present_address,
+    ]);
+
+    // Employee Gender Male and Marital_status = married
+    
+    // 
 
     }
 
