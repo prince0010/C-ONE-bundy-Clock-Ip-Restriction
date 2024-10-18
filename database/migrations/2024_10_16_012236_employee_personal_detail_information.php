@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('home_address');
             $table->string('ext');
             $table->string('present_address');
-            $table->foreignId('branch_id')->constrained('branch');
+            $table->foreignId('branch_id')->constrained('branches');
             $table->timestamps();
 
         });
