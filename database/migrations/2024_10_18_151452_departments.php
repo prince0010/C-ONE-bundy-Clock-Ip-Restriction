@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
+            $table->string('dept_name');
+            $table->integer('parent_id')->default(0);
+             // Change `organizations_id` to `organization_id` to match the organizations table name
+            $table->foreignId('organization_id')->constrained('organization');
             $table->timestamps();
         });
     }
