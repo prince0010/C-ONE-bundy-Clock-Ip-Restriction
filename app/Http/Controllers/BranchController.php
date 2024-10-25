@@ -19,14 +19,7 @@ class BranchController extends Controller
         //
     }
 
-    public function BranchEmployees(Request $request){
-        
-        $branch = $request->id;
-        
-    }
-    /**
-     * Show the form for creating a new resource.
-     */
+     
     public function create(Request $request)
     {
              $validatedData = $request->validate([
@@ -43,7 +36,6 @@ class BranchController extends Controller
             ], 200);
 
     }
-
     /**
      * Store a newly created resource in storage.
      */
